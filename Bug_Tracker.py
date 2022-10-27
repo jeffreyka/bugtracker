@@ -5,14 +5,16 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 option = "0"
+appendStatus = "yes"
 add = True
 bug = []
+updatedStatus = []
 currentTime = datetime.datetime.now()
 
 def AddToList():
     file = open("bugs.txt", 'r+')
     ticket_num = len(file.readlines()) + 1
-    bug.insert(0, ticket_num)
+    bug.insert(0, str(ticket_num))
     bug.append(currentTime.strftime("%x"))
     bug.append(currentTime.strftime("%X"))
     bug.append(name)
@@ -21,7 +23,8 @@ def AddToList():
     bug.append(status)
 def WriteToFile():
     file = open("bugs.txt", 'a')
-    file.write(str(bug) + "\n")
+    file.write(", ".join(bug))
+    file.write("\n")
     file.close()
     bug.clear()
 def ReadFile():
@@ -35,7 +38,7 @@ while option != "3":
 
     if option == "1":
         while add == True:
-            name = input("Please enter a name for the bug: ")
+            name = input("\n Please enter a name for the bug: ")
             details = input("Please enter the details of the bug: ")
             status = "pending"
             severity = input("what is the impact of the bug? (Low, Moderate, High): ").lower()
@@ -43,7 +46,7 @@ while option != "3":
                 add = True
                 AddToList()
                 print("Your ticket number is: " + str(bug[0]))
-                print("Please keep note of it as you will need it to retrieve the ticket later")
+                print("Please keep note of it as you will need it to retrieve the ticket later\n")
                 WriteToFile()
             else:
                 print("Invalid option")
@@ -61,16 +64,20 @@ while option != "3":
         ticket_num = int(input("Please enter your ticket number: "))
         ticket_num -= 1
         bug = file.readlines()[ticket_num]
-        print(bug)
+        updatedStatus.append(bug)
+        print(updatedStatus)
 
-        appendStatus = input("Would you like to update the status? Yes/No: ").lower()
-        if appendStatus == "yes":
-            newStatus = input("What is the updated status? (In progress, Resolved or Pending?: \n").lower()
-            bug.pop(6)
-            bug.append(newStatus)
-            print(bug)
-            file.close()
-        else:
-            break
+        while appendStatus == "yes":
+            appendStatus = input("Would you like to update the status? Yes/No: ").lower()
+            if appendStatus == "yes":
+                newStatus = input("What is the updated status? (In progress, Resolved or Pending?: \n").lower()
+                if newStatus in ["in progress"]:
+                    updatedStatus.remove("pending")
+                    updatedStatus.append(newStatus)
+                    print(bug)
+
+            else:
+                print("Invalid option")
+
     elif option == "3":
         break
