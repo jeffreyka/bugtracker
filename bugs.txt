@@ -1,0 +1,5 @@
+[1, '10/26/22', '15:41:08', 'Writing to text file', 'Unable to write list elements to file correctly', 'high', 'pending']
+[2, '10/26/22', '15:41:08', 'Loop not working', 'The loop which allows me to enter more than one element still runs, even when selecting no', 'high', 'pending']
+[3, '10/26/22', '15:41:08', 'Unable to retrieve data from file and display correctly', 'Currently only able to retrieve all of the data instead of specific lines', 'moderate', 'pending']
+[4, '10/26/22', '15:41:08', 'Stripping square brackets', 'Unable to remove square brackets when reading elements from file', 'low', 'pending']
+[5, '10/27/22', '12:33:50', 'Updating Status', 'Unable to update the status of a bug already saved to file', 'moderate', 'pending']
